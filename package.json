@@ -1,0 +1,24 @@
+{
+  "name": "gitter",
+  "version": "0.1.0",
+  "description": "Gitter chat integration with Atom.io ",
+  "main": "lib/atom-gitter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Glavin001/atom-gitter.git"
+  },
+  "author": "Glavin Wiechert",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Glavin001/atom-gitter/issues"
+  },
+  "homepage": "https://github.com/Glavin001/atom-gitter",
+  "dependencies": {
+    "github-url-from-git": "^1.1.1",
+    "request": "^2.34.0",
+    "lodash": "^2.4.1"
+  }
+}

@@ -1,0 +1,16 @@
+# See https://atom.io/docs/latest/creating-a-package#menus for more details
+'context-menu':
+  '.overlayer':
+      'Enable atom-gitter': 'atom-gitter:toggle'
+
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'Gitter'
+      'submenu': [
+        { 'label': 'Toggle', 'command': 'atom-gitter:toggle' }
+      ]
+    ]
+  }
+]
