@@ -1,13 +1,18 @@
 [atom-gitter](https://github.com/Glavin001/atom-gitter)
 ===========
 
+[![Gitter chat](https://badges.gitter.im/Glavin001/atom-gitter.png)](https://gitter.im/Glavin001/atom-gitter)
+
 > [Gitter chat](https://gitter.im/) integration with [Atom.io](https://atom.io/).
+
 
 | Open | Closed |
 | --- | ---- |
 | ![](https://raw.githubusercontent.com/Glavin001/atom-gitter/master/screenshots/panel_open.png) | ![](https://raw.githubusercontent.com/Glavin001/atom-gitter/master/screenshots/panel_closed.png) |
 
 ## Install
+
+Atom Package: https://atom.io/packages/gitter
 
 ```bash
 apm install gitter
