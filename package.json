@@ -24,7 +24,8 @@
     "github-url-from-git": "^1.1.1",
     "request": "^2.34.0",
     "lodash": "^2.4.1",
-    "atom-message-panel": "^1.0.0"
+    "atom-message-panel": "^1.0.0",
+    "node-gitter": "^1.2.1"
   },
   "engines": {
     "atom": ">=0.50.0"
