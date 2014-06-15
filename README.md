@@ -38,3 +38,29 @@ Go to Settings/Preferences ➔ Search for installed package `gitter` ➔ Enter y
 - `Recent Messages At Top` - Order of displaying the messages.
     If true, the most recent message will be at the top.
 - `Token` - Your Gitter Personal Access Token.
+
+## Keyboard Shortcuts & Commands
+
+By default, there are no existing keyboard shortcuts.
+See [issue for discussion about default keyboard shortcuts](https://github.com/Glavin001/atom-gitter/issues/18).
+
+To add your own custom keyboard shortcuts, go to `Atom` ➔ `Open Your Keymap`.
+
+- `gitter:toggle` - Toggle (open/close) the top panel to compose a new message.
+- `gitter:send-selected-code` - Send the currently selected source code over Gitter.
+- `gitter:send-message` - Send the current message in the compose panel
+
+See [Keymaps In-Depth](https://atom.io/docs/latest/advanced/keymaps) for more details.
+
+### Example
+
+For example, this is [@Glavin001](https://github.com/Glavin001)'s personal `keymap.cson` for Atom.
+
+```Coffeescript
+'.editor': # Available from Editor only
+  'cmd-ctrl-c': 'gitter:send-selected-code'
+'.workspace': # Available Globally
+  'cmd-ctrl-x': 'gitter:toggle'
+'.gitter.panel': # Available from within the Gitter compose message panel
+  'cmd-ctrl-s': 'gitter:send-message'
+```

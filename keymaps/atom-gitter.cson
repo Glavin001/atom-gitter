@@ -7,5 +7,6 @@
 
 # For more detailed documentation see
 # https://atom.io/docs/latest/advanced/keymaps
-'.workspace':
-  'ctrl-alt-o': 'atom-gitter:toggle'
+
+#'.workspace':
+#  'cmd-alt-t': 'gitter:toggle'

@@ -3,7 +3,7 @@
 module.exports =
 class AtomGitterView extends View
   @content: ->
-    @div class: 'atom-gitter overlay from-top panel', =>
+    @div class: 'gitter overlay from-top panel', =>
       @div
         class: 'panel-heading'
         'Send a message with Gitter'
@@ -27,8 +27,9 @@ class AtomGitterView extends View
 
 
   initialize: (serializeState) ->
-    atom.workspaceView.command "atom-gitter:toggle", => @toggle()
-    atom.workspaceView.command "atom-gitter:send-selected-code", => @sendSelectedCode()
+    atom.workspaceView.command "gitter:toggle", => @toggle()
+    atom.workspaceView.command "gitter:send-selected-code", => @sendSelectedCode()
+    atom.workspaceView.command "gitter:send-message", => @sendMessage()
     @gitter = serializeState
 
   # Returns an object that can be retrieved when package is activated
@@ -44,25 +45,20 @@ class AtomGitterView extends View
       @detach()
     else
       atom.workspaceView.append(this)
+      @inputMessage.focus() # Focus on message input
 
   sendSelectedCode: ->
     editor = atom.workspace.getActiveEditor()
     # Get selected code
     text = editor.getSelectedText()
-    console.log editor.getSelectedText, editor.getSelection()
-    console.log text
-
-    selections = editor.getSelections()
-    for s in selections
-      console.log s.getText?()
-      console.log s
-
+    # Check if there is a message to send
     if text
       # Get code language from grammar
-      name = editor.getGrammar().name
+      grammar = editor.getGrammar()
+      name = grammar.name
+      console.log name, grammar
       # Create message
       message = '```'+name+'\n'+text+'\n```'
-      console.log message
       # Send message
       if @gitter.currentRoom and text
         @gitter.currentRoom.send message
