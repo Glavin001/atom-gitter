@@ -29,3 +29,12 @@ Go to Settings/Preferences ➔ Search for installed package `gitter` ➔ Enter y
 - [x] Automatically detect the room using the Git repository remote URL
 - [x] Listen and display new messages
 - [x] Posting message
+- [x] [Send selected code](https://github.com/Glavin001/atom-gitter/issues/14)
+
+## Package Settings
+
+- `Open On New Message` - On receiving a new message,
+    force open the messages panel.
+- `Recent Messages At Top` - Order of displaying the messages.
+    If true, the most recent message will be at the top.
+- `Token` - Your Gitter Personal Access Token.
