@@ -28,6 +28,7 @@ class AtomGitterView extends View
 
   initialize: (serializeState) ->
     atom.workspaceView.command "atom-gitter:toggle", => @toggle()
+    atom.workspaceView.command "atom-gitter:send-selected-code", => @sendSelectedCode()
     @gitter = serializeState
 
   # Returns an object that can be retrieved when package is activated
@@ -43,6 +44,28 @@ class AtomGitterView extends View
       @detach()
     else
       atom.workspaceView.append(this)
+
+  sendSelectedCode: ->
+    editor = atom.workspace.getActiveEditor()
+    # Get selected code
+    text = editor.getSelectedText()
+    console.log editor.getSelectedText, editor.getSelection()
+    console.log text
+
+    selections = editor.getSelections()
+    for s in selections
+      console.log s.getText?()
+      console.log s
+
+    if text
+      # Get code language from grammar
+      name = editor.getGrammar().name
+      # Create message
+      message = '```'+name+'\n'+text+'\n```'
+      console.log message
+      # Send message
+      if @gitter.currentRoom and text
+        @gitter.currentRoom.send message
 
   sendMessage: ->
     # Get input message

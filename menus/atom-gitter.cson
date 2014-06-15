@@ -10,7 +10,8 @@
     'submenu': [
       'label': 'Gitter'
       'submenu': [
-        { 'label': 'Toggle send message panel', 'command': 'atom-gitter:toggle' }
+        { 'label': 'Toggle send message panel', 'command': 'atom-gitter:toggle' },
+        { 'label': 'Send selected code with Gitter', 'command': 'atom-gitter:send-selected-code' }
       ]
     ]
   }
