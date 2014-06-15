@@ -1,7 +1,8 @@
 # See https://atom.io/docs/latest/creating-a-package#menus for more details
 'context-menu':
   '.overlayer':
-      'Enable atom-gitter': 'atom-gitter:toggle'
+      'Send message with Gitter': 'atom-gitter:toggle'
+      'Send selected code with Gitter': 'atom-gitter:send-selected-code'
 
 'menu': [
   {
@@ -9,7 +10,7 @@
     'submenu': [
       'label': 'Gitter'
       'submenu': [
-        { 'label': 'Toggle', 'command': 'atom-gitter:toggle' }
+        { 'label': 'Toggle send message panel', 'command': 'atom-gitter:toggle' }
       ]
     ]
   }

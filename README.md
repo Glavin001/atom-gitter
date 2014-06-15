@@ -28,4 +28,4 @@ Go to Settings/Preferences ➔ Search for installed package `gitter` ➔ Enter y
 
 - [x] Automatically detect the room using the Git repository remote URL
 - [x] Listen and display new messages
-- [ ] Post message
+- [x] Posting message
