@@ -5,10 +5,7 @@
 
 > [Gitter chat](https://gitter.im/) integration with [Atom.io](https://atom.io/).
 
-
-| Open | Closed |
-| --- | ---- |
-| ![](https://raw.githubusercontent.com/Glavin001/atom-gitter/master/screenshots/panel_open.png) | ![](https://raw.githubusercontent.com/Glavin001/atom-gitter/master/screenshots/panel_closed.png) |
+-----
 
 ## Install
 
@@ -30,6 +27,15 @@ Go to Settings/Preferences ➔ Search for installed package `gitter` ➔ Enter y
 - [x] Listen and display new messages
 - [x] Posting message
 - [x] [Send selected code](https://github.com/Glavin001/atom-gitter/issues/14)
+
+| Open | Closed |
+| --- | ---- |
+| ![](https://raw.githubusercontent.com/Glavin001/atom-gitter/master/screenshots/panel_open.png) | ![](https://raw.githubusercontent.com/Glavin001/atom-gitter/master/screenshots/panel_closed.png) |
+
+| Send Selected Code |
+| --- |
+| ![](https://cloud.githubusercontent.com/assets/1885333/3281620/ea6c00b0-f4b9-11e3-85a3-41eadfefa8d8.gif) |
+
 
 ## Package Settings
 
