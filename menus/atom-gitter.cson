@@ -2,7 +2,7 @@
 'context-menu':
   '.overlayer':
       'Send message with Gitter': 'gitter:toggle'
-      # 'Send selected code with Gitter': 'gitter:send-selected-code'
+      'Send selected code with Gitter': 'gitter:send-selected-code'
   '.workspace .editor:not(.mini)':
       'Share GitHub link to this line with Gitter': 'gitter:send-github-line-link'
 

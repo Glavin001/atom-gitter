@@ -2,7 +2,7 @@
   "name": "gitter",
   "version": "0.5.1",
   "description": "Gitter chat integration with Atom.io ",
-  "main": "lib/atom-gitter.js",
+  "main": "lib/atom-gitter.coffee",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
