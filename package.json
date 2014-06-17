@@ -1,6 +1,6 @@
 {
   "name": "gitter",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "Gitter chat integration with Atom.io ",
   "main": "lib/atom-gitter.coffee",
   "scripts": {
