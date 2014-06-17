@@ -27,6 +27,8 @@ Go to Settings/Preferences ➔ Search for installed package `gitter` ➔ Enter y
 - [x] Listen and display new messages
 - [x] Posting message
 - [x] [Send selected code](https://github.com/Glavin001/atom-gitter/issues/14)
+- [x] [Emoji support in messages](http://www.emoji-cheat-sheet.com/)
+- [ ] Support to switch and join other rooms, see issue [#10](https://github.com/Glavin001/atom-gitter/issues/10)
 
 | Open | Closed |
 | --- | ---- |
@@ -39,11 +41,13 @@ Go to Settings/Preferences ➔ Search for installed package `gitter` ➔ Enter y
 
 ## Package Settings
 
+- `Token` - Your Gitter Personal Access Token.
 - `Open On New Message` - On receiving a new message,
     force open the messages panel.
 - `Recent Messages At Top` - Order of displaying the messages.
     If true, the most recent message will be at the top.
-- `Token` - Your Gitter Personal Access Token.
+- `Display Snapshot Messages` - After joining a group,
+    display a snapshot of the previous messages.
 
 ## Keyboard Shortcuts & Commands
 
@@ -54,9 +58,12 @@ To add your own custom keyboard shortcuts, go to `Atom` ➔ `Open Your Keymap`.
 
 - `gitter:toggle-compose-message` - Toggle (open/close) the top panel to compose a new message.
 - `gitter:send-selected-code` - Send the currently selected source code over Gitter.
-- `gitter:send-message` - Send the current message in the compose panel
-- `gitter:open-messages` - Open the Messages panel
-- `gitter:close-messages` - Close the Messages panel
+- `gitter:send-message` - Send the current message in the compose panel.
+- `gitter:open-messages` - Open the Messages panel.
+- `gitter:close-messages` - Close the Messages panel.
+- `gitter:restart` - Restart Gitter, including logging in and joining the project room.
+- `gitter:clear-messages` - Clear all messages.
+- `gitter:toggle-messages` - Toggle (open/close) the bottom panel for displaying all messages.
 
 See [Keymaps In-Depth](https://atom.io/docs/latest/advanced/keymaps) for more details.
 

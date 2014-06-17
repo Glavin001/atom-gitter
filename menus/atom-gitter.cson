@@ -12,10 +12,13 @@
     'submenu': [
       'label': 'Gitter'
       'submenu': [
-        { 'label': 'Toggle send message panel', 'command': 'atom-gitter:toggle-compose-message' },
+        { 'label': 'Restart ', 'command': 'gitter:restart' },
+        { 'label': 'Toggle send message panel', 'command': 'gitter:toggle-compose-message' },
         { 'label': 'Send selected code with Gitter', 'command': 'gitter:send-selected-code' },
         { 'label': 'Open Gitter messages', 'command': 'gitter:open-messages' },
         { 'label': 'Close Gitter messages', 'command': 'gitter:close-messages' },
+        { 'label': 'Clear Gitter messages', 'command': 'gitter:clear-messages' },
+        { 'label': 'Toggle (Open/Close) Gitter messages panel', 'command': 'gitter:toggle-messages' }
       ]
     ]
   }
