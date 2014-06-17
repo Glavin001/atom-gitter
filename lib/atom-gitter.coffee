@@ -4,14 +4,17 @@ PlainMessageView = require("atom-message-panel").PlainMessageView
 githubUrlFromGit = require("github-url-from-git")
 url = require("url")
 Gitter = require("node-gitter")
-emoji = require("emoji-images")
+path = require('path')
+emojify = require('./emojify')
+console.log emojify
+
 module.exports =
   configDefaults:
     token: ""
     openOnNewMessage: true
     recentMessagesAtTop: true
 
-  emojiFolder: "atom://gitter/node_modules/emoji-images/pngs"
+  emojiFolder: "atom://gitter/node_modules/emojify.js/images/emoji"
   atomGitterView: null
   messagePanelView: null
   gitter: null
@@ -176,7 +179,7 @@ module.exports =
     unless isDeleted
 
       # Not deleted
-      message += emoji(html, self.emojiFolder, 20)
+      message += emojify.replace(html);#, self.emojiFolder, 20)
     else
 
       # Is deleted
@@ -202,18 +205,28 @@ module.exports =
     return
 
   activate: (state) ->
-    self = this
-
     # state.atomGitterViewState
-    self.atomGitterView = new AtomGitterView(self)
+    @atomGitterView = new AtomGitterView(self)
 
     # Setup
-    self.initMessagePanelView()
-    token = atom.config.observe("gitter.token", {}, (token) ->
+    @initMessagePanelView()
+    emojify.setConfig({
+        #emojify_tag_type : 'div',        # Only run emojify.js on this element
+        #only_crawl_id    : null,         # Use to restrict where emojify.js applies
+        img_dir          : @emojiFolder,  # Directory for emoji images
+        # ignored_tags     : {            # Ignore the following tags
+        #     'SCRIPT'  : 1,
+        #     'TEXTAREA': 1,
+        #     'A'       : 1,
+        #     'PRE'     : 1,
+        #     'CODE'    : 1
+        # }
+      });
+    token = atom.config.observe("gitter.token", {}, (token) =>
 
       # Start
-      self.login token
-      self.joinProjectRepoRoom()
+      @login token
+      @joinProjectRepoRoom()
       return
     )
     return
