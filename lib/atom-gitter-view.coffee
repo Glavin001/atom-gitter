@@ -31,6 +31,10 @@ class AtomGitterView extends View
     atom.workspaceView.command "gitter:send-selected-code", => @sendSelectedCode()
     atom.workspaceView.command "gitter:send-message", => @sendMessage()
     @gitter = serializeState
+    console.log @gitter
+    atom.workspaceView.command "gitter:open-messages", => @gitter.openMessagePanel()
+    atom.workspaceView.command "gitter:close-messages", => @gitter.closeMessagePanel()
+
 
   # Returns an object that can be retrieved when package is activated
   serialize: ->
@@ -40,7 +44,6 @@ class AtomGitterView extends View
     @detach()
 
   toggle: ->
-    # console.log "AtomGitterView was toggled!"
     if @hasParent()
       @detach()
     else

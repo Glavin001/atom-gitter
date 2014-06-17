@@ -55,6 +55,8 @@ To add your own custom keyboard shortcuts, go to `Atom` ➔ `Open Your Keymap`.
 - `gitter:toggle` - Toggle (open/close) the top panel to compose a new message.
 - `gitter:send-selected-code` - Send the currently selected source code over Gitter.
 - `gitter:send-message` - Send the current message in the compose panel
+- `gitter:open-messages` - Open the Messages panel
+- `gitter:close-messages` - Close the Messages panel
 
 See [Keymaps In-Depth](https://atom.io/docs/latest/advanced/keymaps) for more details.
 

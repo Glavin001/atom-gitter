@@ -35,10 +35,18 @@ module.exports =
     userName + "/" + projectName
 
   initMessagePanelView: ->
-    messagePanelView = new MessagePanelView(title: "Gitter")
-    messagePanelView.attach()
-    @messagePanelView = messagePanelView
-    this
+    @messagePanelView = new MessagePanelView(title: "Gitter")
+    @messagePanelView.attach()
+
+  openMessagePanel: ->
+    unless @messagePanelView.hasParent()
+      @initMessagePanelView()
+    # Open panel on new message
+    @messagePanelView.toggle()  if @messagePanelView.summary.css("display") isnt "none"
+
+  closeMessagePanel: ->
+    if @messagePanelView.hasParent()
+      @messagePanelView.close()
 
   addMessage: (msgView) ->
     recentMessagesAtTop = atom.config.get("gitter.recentMessagesAtTop")
@@ -60,12 +68,12 @@ module.exports =
       className: msgView.className
 
     messagePanelView.setSummary summary
-    this
+    @
 
   setTitle: (title) ->
     messagePanelView = @messagePanelView
     messagePanelView.setTitle title
-    this
+    @
 
   setSummary: (summary) ->
     messagePanelView = @messagePanelView
@@ -78,86 +86,79 @@ module.exports =
       raw: (if raw isnt `undefined` then raw else false)
       className: "gitter-message " + className
     )
-    self
+    @
 
   info: (msg, raw, className) ->
     @log msg, raw, "text-info " + className
-    self
+    @
 
   error: (msg, raw, className) ->
     @log msg, raw, "text-danger " + className
-    self
+    @
 
   warn: (msg, raw, className) ->
     @log msg, raw, "text-warning " + className
-    self
+    @
 
   displaySetupMessage: ->
-    self = this
-    self.error "Please setup your Gitter Personal Access Token. See <a href=\"https://developer.gitter.im/apps\">https://developer.gitter.im/apps</a>", true
-    self.info "If you have not already, <a href=\"https://gitter.im/\">create a Gitter account and sign in</a>. " + "Then go to <a href=\"https://developer.gitter.im/apps\">https://developer.gitter.im/apps</a> and retrieve your Personal Access Token. " + "Enter your Token in the Package Settings. " + "Go to Settings/Preferences ➔ Search for installed package \"Gitter\" and select ➔ Enter your \"Token\".", true
-    self
+    @error "Please setup your Gitter Personal Access Token. See <a href=\"https://developer.gitter.im/apps\">https://developer.gitter.im/apps</a>", true
+    @info "If you have not already, <a href=\"https://gitter.im/\">create a Gitter account and sign in</a>. " + "Then go to <a href=\"https://developer.gitter.im/apps\">https://developer.gitter.im/apps</a> and retrieve your Personal Access Token. " + "Enter your Token in the Package Settings. " + "Go to Settings/Preferences ➔ Search for installed package \"Gitter\" and select ➔ Enter your \"Token\".", true
+    @
 
   login: (token) ->
     console.log "Login", token
-    self = this
-    self.gitter = new Gitter(token)
+    @gitter = new Gitter(token)
     unless token
-      self.displaySetupMessage()
+      @displaySetupMessage()
       return false
-    self.gitter.currentUser().then (user) ->
-      self.info "You are logged in as " + user.username
+    @gitter.currentUser().then (user) ->
+      @info "You are logged in as " + user.username
       return
-
-    self
+    @
 
   joinProjectRepoRoom: ->
-    self = this
-    repoUri = self.getProjectRepoRoom()
+    repoUri = @getProjectRepoRoom()
     unless repoUri
-      self.warn "Could not determine this project's repository room."
+      @warn "Could not determine this project's repository room."
       false
     else
-      self.joinRoomWithRepoUri repoUri
+      @joinRoomWithRepoUri repoUri
 
   joinRoomWithRepoUri: (repoUri) ->
-    self = this
-    self.gitter.rooms.join repoUri, (error, room) ->
+    @gitter.rooms.join repoUri, (error, room) =>
 
       #console.log(error, room);
       if not error and room
-        self.joinRoom room
+        @joinRoom room
       else
-        self.error "Could not find room with repo URI " + repoUri + "." + ((if !!error then " Error: " + error.message else ""))
-        self.displaySetupMessage()  if error.message is "Unauthorized"
+        @error "Could not find room with repo URI " + repoUri + "." + ((if !!error then " Error: " + error.message else ""))
+        @displaySetupMessage()  if error.message is "Unauthorized"
         false
 
     return
 
   joinRoom: (room) ->
-    self = this
-
     #console.log('Found room:', room);
-    self.setTitle "Gitter - " + room.name + " - " + room.topic
-    self.addMessage new PlainMessageView(
+    @setTitle "Gitter - " + room.name + " - " + room.topic
+    @addMessage new PlainMessageView(
       message: "Found room: " + room.name
       raw: true
       className: "gitter-message text-success"
     )
     events = room.streaming().chatMessages()
-    self.currentRoom = room
-    events.on "snapshot", (snapshot) ->
-      self.addMessage new PlainMessageView(
+    @currentRoom = room
+    events.on "snapshot", (snapshot) =>
+      @addMessage new PlainMessageView(
         message: "Connected to Gitter chat room."
         raw: true
         className: "gitter-message text-success"
       )
-      snapshot.forEach self.newMessage, self
+      snapshot.forEach @newMessage, @
       return
 
-    events.on "chatMessages", (msg) ->
+    events.on "chatMessages", (msg) =>
       if msg.operation is "create"
-        self.newMessage msg.model
+        @newMessage msg.model
       else
         console.log "Not a new message: " + msg.operation
       return
@@ -165,8 +166,6 @@ module.exports =
     return
 
   newMessage: (msg) ->
-    self = this
-
     # New message
     username = msg.fromUser.username
     text = msg.text
@@ -189,25 +188,21 @@ module.exports =
       raw: true
       className: "gitter-message"
     )
-    self.addMessage msgView
+    @addMessage msgView
 
     # Force the summary to be recent
-    self.setSummary
+    @setSummary
       summary: username + ": " + text
       className: "text-italic"
 
-
     # Check if should force open
     openOnNewMessage = atom.config.get("gitter.openOnNewMessage")
-
     # Open panel on new message
-    self.messagePanelView.toggle()  if openOnNewMessage and self.messagePanelView.summary.css("display") isnt "none"
+    @messagePanelView.toggle()  if openOnNewMessage and self.messagePanelView.summary.css("display") isnt "none"
     return
 
   activate: (state) ->
     # state.atomGitterViewState
-    @atomGitterView = new AtomGitterView(self)
-
     # Setup
     @initMessagePanelView()
     emojify.setConfig({
@@ -222,6 +217,7 @@ module.exports =
         #     'CODE'    : 1
         # }
       });
+    @atomGitterView = new AtomGitterView(@)
     token = atom.config.observe("gitter.token", {}, (token) =>
 
       # Start
