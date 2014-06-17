@@ -52,7 +52,7 @@ See [issue for discussion about default keyboard shortcuts](https://github.com/G
 
 To add your own custom keyboard shortcuts, go to `Atom` ➔ `Open Your Keymap`.
 
-- `gitter:toggle` - Toggle (open/close) the top panel to compose a new message.
+- `gitter:toggle-compose-message` - Toggle (open/close) the top panel to compose a new message.
 - `gitter:send-selected-code` - Send the currently selected source code over Gitter.
 - `gitter:send-message` - Send the current message in the compose panel
 - `gitter:open-messages` - Open the Messages panel
@@ -68,7 +68,7 @@ For example, this is [@Glavin001](https://github.com/Glavin001)'s personal `keym
 '.editor': # Available from Editor only
   'cmd-ctrl-c': 'gitter:send-selected-code'
 '.workspace': # Available Globally
-  'cmd-ctrl-x': 'gitter:toggle'
+  'cmd-ctrl-x': 'gitter:toggle-compose-message'
 '.gitter.panel': # Available from within the Gitter compose message panel
   'cmd-ctrl-s': 'gitter:send-message'
 ```

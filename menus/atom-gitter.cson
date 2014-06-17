@@ -1,7 +1,7 @@
 # See https://atom.io/docs/latest/creating-a-package#menus for more details
 'context-menu':
   '.overlayer':
-      'Send message with Gitter': 'gitter:toggle'
+      'Send message with Gitter': 'gitter:toggle-compose-message'
       'Send selected code with Gitter': 'gitter:send-selected-code'
   '.workspace .editor:not(.mini)':
       'Share GitHub link to this line with Gitter': 'gitter:send-github-line-link'
@@ -12,7 +12,7 @@
     'submenu': [
       'label': 'Gitter'
       'submenu': [
-        { 'label': 'Toggle send message panel', 'command': 'atom-gitter:toggle' },
+        { 'label': 'Toggle send message panel', 'command': 'atom-gitter:toggle-compose-message' },
         { 'label': 'Send selected code with Gitter', 'command': 'gitter:send-selected-code' },
         { 'label': 'Open Gitter messages', 'command': 'gitter:open-messages' },
         { 'label': 'Close Gitter messages', 'command': 'gitter:close-messages' },

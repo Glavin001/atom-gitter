@@ -36,6 +36,8 @@ module.exports =
 
   initMessagePanelView: ->
     @messagePanelView = new MessagePanelView(title: "Gitter")
+    @messagePanelView.addClass('native-key-bindings')
+    @messagePanelView.attr('tabindex', -1)
     @messagePanelView.attach()
 
   openMessagePanel: ->
@@ -167,14 +169,14 @@ module.exports =
 
   newMessage: (msg) ->
     # New message
-    username = msg.fromUser.username
+    user = msg.fromUser
     text = msg.text
     html = msg.html
     sent = msg.sent
     isDeleted = not text
     d = new Date(sent)
     dateStr = d.toDateString() + " " + d.toTimeString()
-    message = "<a href=\"https://github.com" + msg.fromUser.url + "\">" + msg.fromUser.username + "</a>" + " - " + dateStr + "<br/>"
+    message = "<a href=\"https://github.com" + user.url + "\" title=\"" +user.displayName + "\">" + user.username + "</a>" + " - " + dateStr + "<br/>"
     unless isDeleted
 
       # Not deleted
@@ -192,7 +194,7 @@ module.exports =
 
     # Force the summary to be recent
     @setSummary
-      summary: username + ": " + text
+      summary: user.username + ": " + text
       className: "text-italic"
 
     # Check if should force open
