@@ -18,7 +18,8 @@
         { 'label': 'Open Gitter messages', 'command': 'gitter:open-messages' },
         { 'label': 'Close Gitter messages', 'command': 'gitter:close-messages' },
         { 'label': 'Clear Gitter messages', 'command': 'gitter:clear-messages' },
-        { 'label': 'Toggle (Open/Close) Gitter messages panel', 'command': 'gitter:toggle-messages' }
+        { 'label': 'Toggle (Open/Close) Gitter messages panel', 'command': 'gitter:toggle-messages' },
+        { 'label': 'Switch Gitter Room', 'command': 'gitter:switch-room' }
       ]
     ]
   }

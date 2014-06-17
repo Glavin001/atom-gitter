@@ -1,4 +1,5 @@
 AtomGitterView = require("./atom-gitter-view")
+AtomGitterInputRoomView = require("./atom-gitter-input-room-view")
 MessagePanelView = require("atom-message-panel").MessagePanelView
 PlainMessageView = require("atom-message-panel").PlainMessageView
 githubUrlFromGit = require("github-url-from-git")
@@ -187,6 +188,12 @@ module.exports =
 
     return
 
+  switchRoom: () ->
+    console.log "Switch room"
+    unless @roomInputView.hasParent()
+      @roomInputView.toggle()
+    @roomInputView.inputRoom.val(@currentRoom.uri)
+
   newMessage: (msg) ->
     console.log "Gitter New Message: ", msg
     # New message
@@ -231,6 +238,15 @@ module.exports =
     @login token
     @joinProjectRepoRoom()
 
+  setupCommands: ->
+    console.log "Setup Commands"
+    atom.workspaceView.command "gitter:restart", => @restart()
+    atom.workspaceView.command "gitter:open-messages", => @openMessagePanel()
+    atom.workspaceView.command "gitter:close-messages", => @closeMessagePanel()
+    atom.workspaceView.command "gitter:toggle-messages", => @toggleMessagePanel()
+    atom.workspaceView.command "gitter:clear-messages", => @messagePanelView.clear()
+    atom.workspaceView.command "gitter:switch-room", => @switchRoom()
+
   activate: (state) ->
     console.log "Activate Gitter"
     # state.atomGitterViewState
@@ -249,16 +265,19 @@ module.exports =
         # }
       });
     @atomGitterView = new AtomGitterView(@)
+    @roomInputView = new AtomGitterInputRoomView(@)
     token = atom.config.observe("gitter.token", {}, (token) =>
       # Start
       @login token
       @joinProjectRepoRoom()
       return
     )
+    @setupCommands();
     return
 
   deactivate: ->
     @atomGitterView.destroy()
+    @roomInputView.destroy()
 
   serialize: ->
     atomGitterViewState: @atomGitterView.serialize()

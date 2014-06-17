@@ -27,15 +27,10 @@ class AtomGitterView extends View
 
   initialize: (serializeState) ->
     @gitter = serializeState
-    atom.workspaceView.command "gitter:restart", => @gitter.restart()
     atom.workspaceView.command "gitter:toggle", => @toggle()
     atom.workspaceView.command "gitter:toggle-compose-message", => @toggle()
     atom.workspaceView.command "gitter:send-selected-code", => @sendSelectedCode()
     atom.workspaceView.command "gitter:send-message", => @sendMessage()
-    atom.workspaceView.command "gitter:open-messages", => @gitter.openMessagePanel()
-    atom.workspaceView.command "gitter:close-messages", => @gitter.closeMessagePanel()
-    atom.workspaceView.command "gitter:toggle-messages", => @gitter.toggleMessagePanel()
-    atom.workspaceView.command "gitter:clear-messages", => @gitter.messagePanelView.clear()
 
   # Returns an object that can be retrieved when package is activated
   serialize: ->

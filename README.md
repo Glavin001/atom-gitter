@@ -28,7 +28,7 @@ Go to Settings/Preferences ➔ Search for installed package `gitter` ➔ Enter y
 - [x] Posting message
 - [x] [Send selected code](https://github.com/Glavin001/atom-gitter/issues/14)
 - [x] [Emoji support in messages](http://www.emoji-cheat-sheet.com/)
-- [ ] Support to switch and join other rooms, see issue [#10](https://github.com/Glavin001/atom-gitter/issues/10)
+- [x] [Support to switch and join other rooms](https://github.com/Glavin001/atom-gitter/issues/10)
 
 | Open | Closed |
 | --- | ---- |
@@ -64,6 +64,7 @@ To add your own custom keyboard shortcuts, go to `Atom` ➔ `Open Your Keymap`.
 - `gitter:restart` - Restart Gitter, including logging in and joining the project room.
 - `gitter:clear-messages` - Clear all messages.
 - `gitter:toggle-messages` - Toggle (open/close) the bottom panel for displaying all messages.
+- `gitter:switch-room` - Open input for entering a new room URI to switch into.
 
 See [Keymaps In-Depth](https://atom.io/docs/latest/advanced/keymaps) for more details.
 
@@ -76,6 +77,7 @@ For example, this is [@Glavin001](https://github.com/Glavin001)'s personal `keym
   'cmd-ctrl-c': 'gitter:send-selected-code'
 '.workspace': # Available Globally
   'cmd-ctrl-x': 'gitter:toggle-compose-message'
+  'cmd-ctrl-z': 'gitter:switch-room'
 '.gitter.panel': # Available from within the Gitter compose message panel
   'cmd-ctrl-s': 'gitter:send-message'
 ```
