@@ -7,6 +7,7 @@ url = require("url")
 Gitter = require("node-gitter")
 path = require('path')
 emojify = require('./emojify')
+Logger = require "atom-logger"
 
 module.exports =
   configDefaults:
@@ -24,11 +25,11 @@ module.exports =
     git = atom.project.getRepo()
     # Return if cannot get Repo for Project.
     return null unless git
-    console.log "Project has Git repo"
+    @logger.info "Project has Git repo"
     originUrl = git.getOriginUrl()
     githubUrl = githubUrlFromGit(originUrl)
     return null unless githubUrl
-    console.log "Project has GitHub URL", githubUrl
+    @logger.info "Project has GitHub URL #{githubUrl}"
     temp = url.parse(githubUrl).path.split("/")
     userName = temp[1]
     projectName = temp[2]
@@ -36,17 +37,17 @@ module.exports =
 
   initMessagePanelView: ->
     if @messagePanelView?.hasParent()
-      console.log "MessagePanelView already exists and is attached."
+      @logger.info "MessagePanelView already exists and is attached."
       return @messagePanelView
     unless @messagePanelView
-      console.log "MessagePanelView does not exist."
+      @logger.info "MessagePanelView does not exist."
       @messagePanelView = new MessagePanelView(title: "Gitter")
       @messagePanelView.addClass('native-key-bindings')
       @messagePanelView.attr('tabindex', -1)
       # Display current room
       if @currentRoom
         @setTitle "Gitter - " + @currentRoom.name + " - " + @currentRoom.topic
-    console.log "Attaching MessagePanelView"
+    @logger.info "Attaching MessagePanelView"
     @messagePanelView.attach()
 
   toggleMessagePanel: ->
@@ -60,14 +61,15 @@ module.exports =
   openMessagePanel: ->
     @initMessagePanelView()
     # Force open messages panel
-    @messagePanelView.toggle()  if @messagePanelView?.summary.css("display") isnt "none"
+    if @messagePanelView?.summary.css("display") isnt "none"
+      @messagePanelView.toggle()
 
   closeMessagePanel: ->
     if @messagePanelView?.hasParent()
       @messagePanelView.close()
 
   addMessage: (msgView) ->
-    console.log "Add Message", msgView
+    @logger.info "Add Message #{msgView}"
     recentMessagesAtTop = atom.config.get("gitter.recentMessagesAtTop")
 
     # Add Message
@@ -98,10 +100,10 @@ module.exports =
     this
 
   log: (msg, raw, className) ->
-    console.log "Gitter Log: ", msg, raw, className
+    @logger.info "Gitter Log: #{msg} #{raw} #{className}"
     @addMessage new PlainMessageView(
       message: msg or ""
-      raw: (if raw isnt `undefined` then raw else false)
+      raw: (if raw? then raw else false)
       className: "gitter-message " + className
     )
     @
@@ -119,13 +121,13 @@ module.exports =
     @
 
   displaySetupMessage: ->
-    console.log "Gitter Display Setup Message"
+    @logger.info "Gitter Display Setup Message"
     @error "Please setup your Gitter Personal Access Token. See <a href=\"https://developer.gitter.im/apps\">https://developer.gitter.im/apps</a>", true
     @info "If you have not already, <a href=\"https://gitter.im/\">create a Gitter account and sign in</a>. " + "Then go to <a href=\"https://developer.gitter.im/apps\">https://developer.gitter.im/apps</a> and retrieve your Personal Access Token. " + "Enter your Token in the Package Settings. " + "Go to Settings/Preferences ➔ Search for installed package \"Gitter\" and select ➔ Enter your \"Token\".", true
     @
 
   login: (token) ->
-    console.log "Login", token
+    @logger.info "Login"#, token
     @gitter = new Gitter(token)
     unless token
       @displaySetupMessage()
@@ -145,7 +147,7 @@ module.exports =
 
   joinRoomWithRepoUri: (repoUri) ->
     @gitter.rooms.join repoUri, (error, room) =>
-      console.log('joinRoomWithRepoUri', repoUri, error, room);
+      @logger.info 'joinRoomWithRepoUri #{repoUri}, #{error}, #{room}'
       if not error and room
         @joinRoom room
       else
@@ -155,7 +157,7 @@ module.exports =
     return
 
   joinRoom: (room) ->
-    console.log('Join room: ', room);
+    @logger.info 'Join room: #{room}'
     unless room
       return @warn "Invalid room. Cannot join."
 
@@ -169,7 +171,7 @@ module.exports =
     events = room.streaming().chatMessages()
 
     if atom.config.get('gitter.displaySnapshotMessages')
-      console.log "Should display snapshot messages"
+      @logger.info "Should display snapshot messages"
       events.on "snapshot", (snapshot) =>
         @addMessage new PlainMessageView(
           message: "Connected to Gitter chat room."
@@ -183,19 +185,19 @@ module.exports =
       if msg.operation is "create"
         @newMessage msg.model
       else
-        console.log "Not a new message: " + msg.operation
+        @logger.info "Not a new message: #{msg.operation}"
       return
 
     return
 
   switchRoom: () ->
-    console.log "Switch room"
+    @logger.info "Switch room"
     unless @roomInputView.hasParent()
       @roomInputView.toggle()
     @roomInputView.inputRoom.val(@currentRoom.uri)
 
   newMessage: (msg) ->
-    console.log "Gitter New Message: ", msg
+    @logger.info "Gitter New Message: #{msg}"
     # New message
     user = msg.fromUser
     text = msg.text
@@ -227,19 +229,19 @@ module.exports =
     openOnNewMessage = atom.config.get("gitter.openOnNewMessage")
     # Open panel on new message
     if openOnNewMessage
-      console.log "Should open on this new message."
+      @logger.info "Should open on this new message."
       @openMessagePanel()
     @
 
   restart: ->
-    console.log "Restart Gitter"
+    @logger.info "Restart Gitter"
     @initMessagePanelView()
     token = atom.config.get("gitter.token")
     @login token
     @joinProjectRepoRoom()
 
   setupCommands: ->
-    console.log "Setup Commands"
+    @logger.info "Setup Commands"
     atom.workspaceView.command "gitter:restart", => @restart()
     atom.workspaceView.command "gitter:open-messages", => @openMessagePanel()
     atom.workspaceView.command "gitter:close-messages", => @closeMessagePanel()
@@ -248,7 +250,8 @@ module.exports =
     atom.workspaceView.command "gitter:switch-room", => @switchRoom()
 
   activate: (state) ->
-    console.log "Activate Gitter"
+    @logger = new Logger atom.config, "gitter"
+    @logger.info "Atom Gitter Activated!"
     # state.atomGitterViewState
     # Setup
     @initMessagePanelView()
@@ -263,7 +266,7 @@ module.exports =
         #     'PRE'     : 1,
         #     'CODE'    : 1
         # }
-      });
+      })
     @atomGitterView = new AtomGitterView(@)
     @roomInputView = new AtomGitterInputRoomView(@)
     token = atom.config.observe("gitter.token", {}, (token) =>
@@ -272,12 +275,13 @@ module.exports =
       @joinProjectRepoRoom()
       return
     )
-    @setupCommands();
+    @setupCommands()
     return
 
   deactivate: ->
     @atomGitterView.destroy()
     @roomInputView.destroy()
+    @logger.destroy()
 
   serialize: ->
     atomGitterViewState: @atomGitterView.serialize()

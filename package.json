@@ -26,7 +26,8 @@
     "lodash": "^2.4.1",
     "atom-message-panel": "^1.0.0",
     "node-gitter": "^1.2.1",
-    "emojify.js": "git+https://github.com/hassankhan/emojify.js.git"
+    "emojify.js": "git+https://github.com/hassankhan/emojify.js.git",
+    "atom-logger": "^0.1.1"
   },
   "engines": {
     "atom": ">=0.50.0"

@@ -55,7 +55,6 @@ class AtomGitterView extends View
       # Get code language from grammar
       grammar = editor.getGrammar()
       name = grammar.name
-      console.log name, grammar
       # Create message
       message = '```'+name+'\n'+text+'\n```'
       # Send message

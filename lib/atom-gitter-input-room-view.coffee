@@ -47,13 +47,13 @@ class AtomGitterInputRoomView extends View
       @inputRoom.focus() # Focus on message input
 
   joinProjectRepoRoom: ->
-    console.log "Join project room"
+    @gitter.logger.info "Join project room"
     @gitter.joinProjectRepoRoom()
     @toggle()
 
   switchRoom: ->
     newRoom = @inputRoom.val()
-    console.log "Switch room", newRoom
+    @gitter.logger.info "Switch room #{newRoom}"
     if newRoom
       @gitter.joinRoomWithRepoUri(newRoom)
     @toggle()
