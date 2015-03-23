@@ -3,6 +3,6 @@ path = require('path')
 module.exports = (() ->
   # Emojify
   execFile = require('./execFile');
-  emojifyPath = path.resolve(__dirname, '../node_modules/emojify.js/emojify.js');
+  emojifyPath = path.resolve(__dirname, '../node_modules/emojify.js/dist/js/emojify.js');
   execFile(emojifyPath).emojify;
 )()
